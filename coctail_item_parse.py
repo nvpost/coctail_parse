@@ -1,12 +1,12 @@
 from bs4 import BeautifulSoup
 import requests
 
-def parse(coctail_url):
+def parse(id, coctail_url):
 
     page = requests.get(coctail_url)
     soup = BeautifulSoup(page.text, "html.parser")
 
-    en_title = soup.find(class_='name-en').text.replace('\xa0', ' ')
+    en_name = soup.find(class_='name-en').text.replace('\xa0', ' ')
     tags_list = soup.find(class_='tags').findAll(class_='tag')
     tags = get_tags(tags_list)
 
@@ -23,12 +23,8 @@ def parse(coctail_url):
         text_info = soup.find(id='cocktail-tag-text').find('p').text.replace('\xa0', ' ')
     except:
         text_info = ''
-    # if soup.find(id='cocktail-tag-text').find('p'):
-    #     text_info = soup.find(id='cocktail-tag-text').find('p').text.replace('\xa0', ' ')
 
-    print(text_info)
-
-    return {'en_title':en_title, 'process':process, 'text_info':text_info}
+    return {'en_name':en_name, 'process':process, 'text_info':text_info}
 
 
 def get_tags(tags_list):
