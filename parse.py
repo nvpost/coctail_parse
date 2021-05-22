@@ -6,7 +6,7 @@ import requests
 import coctail_item_parse as cip
 import sql as sql
 
-url = "https://ru.inshaker.com/cocktails?random_page=2"
+url = "https://ru.inshaker.com/cocktails?random_page=59"
 page = requests.get(url)
 
 
@@ -24,14 +24,15 @@ for coctail in coctails:
     coctail_url = coctail.find(class_='cocktail-item-preview')['href']
     coctail_item_data = cip.parse(id, start_url+coctail_url)
 
-    main_row={'id':id, 'name':name}
+    main_row={'id':id, 'name':name, 'img_src': img_src}
     row = {**main_row, **coctail_item_data}
 
 
-    query = "INSERT INTO coctails(coctail_id, name, en_name, process, text_info) VALUES(%s, %s, %s, %s, %s)"
+    query = "INSERT INTO coctails(coctail_id, name, en_name, src, process, text_info, origin_url) VALUES(%s, %s, %s, %s, %s, %s, %s)"
 
 
-    args = (row['id'], row['name'], row['en_name'], row['process'], row['text_info'])
+    args = (row['id'], row['name'], row['en_name'], row['img_src'], row['process'], row['text_info'], coctail_url)
+
 
     # try:
     #     sql.cursor.execute(query, args)
@@ -39,7 +40,7 @@ for coctail in coctails:
     #     print(args)
     # except:
     #     print('ошибка')
-
-
-
+    #
+    #
+    #
     # print(coctail_item_data)
