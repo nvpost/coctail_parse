@@ -8,4 +8,3 @@ conn = pymysql.connect(host='localhost',
 
 cursor = conn.cursor()
 
-print(cursor)

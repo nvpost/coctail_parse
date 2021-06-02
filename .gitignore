@@ -2,3 +2,4 @@ venv/
 .idea/
 __pycache__/
 
+get_img/imgs/
